@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Homepage</title>
+	<link rel="stylesheet" type="text/css" href="css/homepageStyle.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-sm bg-primary row col-sm-12 fixed-top bg-info" style="height: 10%;">
+    <ul class="navbar-nav col-sm-12">
+      <li class="nav-item col-sm-2" style="">
+        <a class="btn text-light" href="/add_post">Add New Post</a>
+      </li>
+      <li class="nav-item col-sm-9">
+        <a href="https://github.com/MUKESHSIHAG/user_post" target="_blank" class="btn text-light">View Code</a>
+      </li>
+      <li class="nav-item" style="">
+          <a class="btn text-light" href="#" onclick="userLogout()">Logout</a>
+      </li>
+    </ul>
+  </nav>
+  <center style="margin-top: 7%;">
+    {{#each allPosts}}
+      <div class="card col-sm-6" style="margin-bottom: 5%;">
+        <div class="card-header bg-dark text-light">
+          {{ this._doc.name }}
+        </div>
+        <div class="card-body" style="min-height: 100px;">
+          <p class="card-text">{{ this._doc.description }}</p>
+        </div>
+        <div class="card-footer text-muted">
+          <span><a href=""><i class="fa fa-thumbs-up"></i></a></span>&nbsp;&nbsp;&nbsp;&nbsp;
+          <b> Post On: </b> {{ this._doc.createdAt }}
+      </div>
+      </div>
+    {{/each}}
+  </center>
+<script>
+  function userLogout() {
+    var token = localStorage.getItem('token');
+        $.ajax({
+        type: 'POST',
+        contentType: 'application/json',
+        headers: {
+            'Authorization': token
+        },
+        url: '/users/logout'
+    })
+
+    location.href = '/login'
+  }
+</script>
+</body>
+</html>
